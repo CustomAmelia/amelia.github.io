@@ -5,6 +5,7 @@ const whiteModeToggle = document.getElementById("white-mode-toggle");
 const newTabButton = document.getElementById("new-tab-button");
 const tabList = document.getElementById("tab-list");
 const removeAllTabsButton = document.getElementById('remove-all-tabs-button');
+const changeTabButton = document.getElementById("change-note-button");
 
 function saveTabsToStorage() {
 	localStorage.setItem("tabs", JSON.stringify(tabs));
@@ -13,17 +14,17 @@ function saveTabsToStorage() {
 function loadTabsFromStorage() {
 	let savedTabs = localStorage.getItem("tabs");
 	if (savedTabs) {
-	  tabs = JSON.parse(savedTabs);
+		tabs = JSON.parse(savedTabs);
 	}
 	if (tabs.length === 0) {
-	  addNewTab();
+		addNewTab();
 	} else {
-	  renderTabs();
-	  currentTab = 0;
-	  editor.innerHTML = tabs[currentTab].content;
-	  setActiveTab(currentTab);
+		renderTabs();
+		currentTab = 0;
+		editor.innerHTML = tabs[currentTab].content;
+		setActiveTab(currentTab);
 	}
-  }    
+}
 
 function enableWhiteMode() {
 	document.body.classList.add("white-mode");
@@ -109,6 +110,36 @@ function setActiveTab(index) {
 		}
 	});
 }
+
+function editTabName(index) {
+	const li = tabList.childNodes[index];
+	const oldTitle = li.textContent;
+	li.innerHTML = `
+		<input class="tab-input" type="text" value="${oldTitle}">
+	`;
+
+	const input = li.querySelector(".tab-input");
+
+	input.addEventListener("keyup", (event) => {
+		if (event.key === "Enter") {
+			const newTitle = input.value.trim() || oldTitle;
+			tabs[index].title = newTitle;
+			saveTabsToStorage();
+			li.innerHTML = newTitle;
+		}
+	});
+
+	input.addEventListener("blur", () => {
+		const newTitle = input.value.trim() || oldTitle;
+		tabs[index].title = newTitle;
+		saveTabsToStorage();
+		li.innerHTML = newTitle;
+	});
+
+	input.focus();
+}
+
+changeTabButton.addEventListener('click', () => editTabName(currentTab));
 
 whiteModeToggle.addEventListener("click", () => {
 	if (document.body.classList.contains("white-mode")) {
