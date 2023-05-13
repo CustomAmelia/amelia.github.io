@@ -34,7 +34,7 @@ function disableWhiteMode() {
 
 function addNewTab() {
 	const newTab = {
-		title: `Untitled ${tabs.length + 1}`,
+		title: `Note ${tabs.length + 1}`,
 		content: "",
 	};
 	tabs.push(newTab);
