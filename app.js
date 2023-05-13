@@ -6,6 +6,7 @@ const newTabButton = document.getElementById("new-tab-button");
 const tabList = document.getElementById("tab-list");
 const removeAllTabsButton = document.getElementById('remove-all-tabs-button');
 const changeTabButton = document.getElementById("change-note-button");
+const charCount = document.querySelector('#text-container');
 
 function saveTabsToStorage() {
 	localStorage.setItem("tabs", JSON.stringify(tabs));
@@ -152,6 +153,23 @@ whiteModeToggle.addEventListener("click", () => {
 newTabButton.addEventListener("click", addNewTab);
 
 removeAllTabsButton.addEventListener('click', removeAllTabs);
+
+let charCountUpdater = setInterval(updateCharCount, 50);
+let checkForTab = setInterval(checkTab, 50);
+
+function checkTab() {
+	if (tabs[currentTab] == undefined) {
+        addNewTab();
+    }
+	else if (tabs[currentTab].content.length > 0) {
+		return;
+    }
+}
+
+function updateCharCount() {
+  let num = tabs[currentTab].content.length;
+  charCount.textContent = "Characters: " + num;
+}
 
 editor.addEventListener("input", () => {
 	if (tabs[currentTab] == undefined) {
