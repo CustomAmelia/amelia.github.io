@@ -13,14 +13,17 @@ function saveTabsToStorage() {
 function loadTabsFromStorage() {
 	let savedTabs = localStorage.getItem("tabs");
 	if (savedTabs) {
-		tabs = JSON.parse(savedTabs);
-		renderTabs();
-		editor.innerHTML = tabs[currentTab].content;
-		setActiveTab(currentTab);
-	} else {
-		addNewTab();
+	  tabs = JSON.parse(savedTabs);
 	}
-}
+	if (tabs.length === 0) {
+	  addNewTab();
+	} else {
+	  renderTabs();
+	  currentTab = 0;
+	  editor.innerHTML = tabs[currentTab].content;
+	  setActiveTab(currentTab);
+	}
+  }    
 
 function enableWhiteMode() {
 	document.body.classList.add("white-mode");
@@ -38,6 +41,7 @@ function addNewTab() {
 		content: "",
 	};
 	tabs.push(newTab);
+	saveTabsToStorage(); // save the new tab to storage
 	renderTabs();
 	setCurrentTab(tabs.length - 1);
 }
@@ -119,6 +123,9 @@ newTabButton.addEventListener("click", addNewTab);
 removeAllTabsButton.addEventListener('click', removeAllTabs);
 
 editor.addEventListener("input", () => {
+	if (tabs[currentTab] == undefined) {
+		addNewTab();
+	}
 	tabs[currentTab].content = editor.innerHTML;
 	saveTabsToStorage();
 });
