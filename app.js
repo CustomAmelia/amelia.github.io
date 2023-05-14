@@ -155,12 +155,19 @@ function editTabName(index) {
 
 changeTabButton.addEventListener('click', () => editTabName(currentTab));
 
+let isWhiteModeOn = false;
 whiteModeToggle.addEventListener("click", () => {
-	if (document.body.classList.contains("white-mode")) {
+	if (isWhiteModeOn) {
+		// white mode is currently on, so turn it off
+		whiteModeToggle.style.backgroundImage = "url('bright.png')";
+		isWhiteModeOn = false;
 		disableWhiteMode();
-	} else {
+	  } else {
+		// white mode is currently off, so turn it on
+		whiteModeToggle.style.backgroundImage = "url('brightblack.png')";
+		isWhiteModeOn = true;
 		enableWhiteMode();
-	}
+	  }
 });
 
 newTabButton.addEventListener("click", addNewTab);
@@ -199,6 +206,12 @@ function updateCharCount() {
 	console.log("No content, caught error.");
   }
   charCount.textContent = "Characters: " + num;
+if (editor.textContent.includes("HG SUCKS HE IS THE WORST!")) { //easter egg :skull:
+	charCount.style.color = "red";
+}
+else {
+	charCount.style.color = "white";
+}
 }
 
 editor.addEventListener("input", () => {
