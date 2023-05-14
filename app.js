@@ -9,10 +9,12 @@ const changeTabButton = document.getElementById("change-note-button");
 const charCount = document.querySelector('#text-container');
 
 function saveTabsToStorage() {
+	console.log("Saving tabs to storage");
 	localStorage.setItem("tabs", JSON.stringify(tabs));
 }
 
 function loadTabsFromStorage() {
+	console.log("Loading tabs from storage");
 	let savedTabs = localStorage.getItem("tabs");
 	if (savedTabs) {
 		tabs = JSON.parse(savedTabs);
@@ -28,16 +30,19 @@ function loadTabsFromStorage() {
 }
 
 function enableWhiteMode() {
+	console.log("Enabled White Mode");
 	document.body.classList.add("white-mode");
 	saveTabsToStorage();
 }
 
 function disableWhiteMode() {
+	console.log("Disabled White Mode");
 	document.body.classList.remove("white-mode");
 	saveTabsToStorage();
 }
 
 function addNewTab() {
+	console.log("Adding new tab");
 	const newTab = {
 		title: `Note ${tabs.length + 1}`,
 		content: "",
@@ -49,6 +54,7 @@ function addNewTab() {
 }
 
 function removeTab(index) {
+	console.log("Removing tab");
 	if (index === currentTab) {
 		editor.innerHTML = ""; // clear editor content
 	}
@@ -61,6 +67,7 @@ function removeTab(index) {
 }
 
 function removeCurrentTab() {
+	console.log("Removing current tab");
 	editor.innerHTML = ""; // clear content
 	tabs.splice(currentTab, 1);
 	saveTabsToStorage(); // save the current tab to storage to remove!
@@ -76,6 +83,7 @@ const deleteTabButton = document.getElementById('delete-tab-button');
 deleteTabButton.addEventListener('click', removeCurrentTab);
 
 function removeAllTabs() {
+	console.log("Removing all tabs");
 	tabs = [];
 	saveTabsToStorage(); // this was the fix? :skull:
 	editor.innerHTML = "";
@@ -83,6 +91,7 @@ function removeAllTabs() {
 }
 
 function renderTabs() {
+	console.log("Rendering tabs");
 	tabList.innerHTML = "";
 	tabs.forEach((tab, index) => {
 		const li = document.createElement("li");
@@ -96,12 +105,14 @@ function renderTabs() {
 }
 
 function setCurrentTab(index) {
+	console.log("Setting current tab to ", index);
 	currentTab = index;
 	editor.innerHTML = tabs[currentTab].content;
 	setActiveTab(currentTab);
 }
 
 function setActiveTab(index) {
+	console.log("Setting active tab to ", index);
 	const tabs = document.querySelectorAll("#tab-list li");
 	tabs.forEach((tab, tabIndex) => {
 		if (tabIndex === index) {
@@ -113,6 +124,7 @@ function setActiveTab(index) {
 }
 
 function editTabName(index) {
+	console.log("Editing tab name");
 	const li = tabList.childNodes[index];
 	const oldTitle = li.textContent;
 	li.innerHTML = `
@@ -168,6 +180,9 @@ function checkTab() {
 
 function updateCharCount() {
   let num = tabs[currentTab].content.length;
+  if (num === undefined) {
+	console.log("No content, caught error.");
+  }
   charCount.textContent = "Characters: " + num;
 }
 
