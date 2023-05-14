@@ -1,12 +1,13 @@
 let tabs = [];
 let currentTab = 0;
-const editor = document.getElementById("editor");
-const whiteModeToggle = document.getElementById("white-mode-toggle");
-const newTabButton = document.getElementById("new-tab-button");
-const tabList = document.getElementById("tab-list");
+const editor = document.getElementById('editor');
+const whiteModeToggle = document.getElementById('white-mode-toggle');
+const newTabButton = document.getElementById('new-tab-button');
+const tabList = document.getElementById('tab-list');
 const removeAllTabsButton = document.getElementById('remove-all-tabs-button');
-const changeTabButton = document.getElementById("change-note-button");
+const changeTabButton = document.getElementById('change-note-button');
 const charCount = document.querySelector('#text-container');
+const clearButton = document.getElementById('clear-all-tabs-button');
 
 function saveTabsToStorage() {
 	console.log("Saving tabs to storage");
@@ -178,8 +179,22 @@ function checkTab() {
     }
 }
 
+function clearTab() {
+	console.log("Clearing tab");
+	try {
+	  tabs[currentTab].content = "";
+	  editor.innerHTML = ""; // clear the editor HTML as well
+	  saveTabsToStorage();
+	} catch (err) {
+	  console.log("Error clearing tab: ", err);
+	}
+  }
+
+  
+clearButton.addEventListener('click', clearTab)
+
 function updateCharCount() {
-  let num = tabs[currentTab].content.length;
+  let num = editor.textContent.length;
   if (num === undefined) {
 	console.log("No content, caught error.");
   }
