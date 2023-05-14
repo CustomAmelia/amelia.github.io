@@ -7,7 +7,7 @@ const tabList = document.getElementById('tab-list');
 const removeAllTabsButton = document.getElementById('remove-all-tabs-button');
 const changeTabButton = document.getElementById('change-note-button');
 const charCount = document.querySelector('#text-container');
-const clearButton = document.getElementById('clear-all-tabs-button');
+const clearButton = document.getElementById('clear-tab-button');
 
 function saveTabsToStorage() {
 	console.log("Saving tabs to storage");

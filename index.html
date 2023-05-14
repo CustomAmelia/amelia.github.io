@@ -12,16 +12,26 @@
 
           h1 {
             text-align: center;
-            font-family: "Lobster", cursive;
-            font-size: 48px;
+            font-family: "Minecrafter", sans-serif;
+            font-size: 42px;
             margin-top: 50px;
             margin-bottom: 20px;
+            opacity: 0.95;
           }
 
+          h1:hover {
+            opacity: 1;
+          }
           a {
         color: rgb(255, 255, 255);
         text-decoration: none;
       }
+
+      @font-face {
+        font-family: 'Minecrafter';
+        src: url('Minecrafter.Reg.ttf');
+      }
+
           #editor {
             background-color: #333;
             border: none;
@@ -72,6 +82,8 @@
           color: white;
           padding: 4px;
           border-radius: 4px;
+          font-family: "Open Sans", sans-serif;
+          font-size: 16px;
         }
 
           a:visited { text-decoration: none; color:rgb(255, 255, 255); }
@@ -126,7 +138,7 @@
         left: 10px;
       }
 
-      #clear-all-tabs-button {
+      #clear-tab-button {
         background-color: #555;
         color: #fff;
         border: none;
@@ -137,6 +149,10 @@
         position: absolute;
         top: 235px;
         left: 10px;
+      }
+
+      #clear-tab-button:hover {
+        background-color: #777;
       }
 
       #change-note-button:hover {
@@ -245,7 +261,7 @@
     <button id="remove-all-tabs-button">Remove All Tabs</button>
     <button id="delete-tab-button">Remove Tab</button>
     <button id="change-note-button">Edit Note Name</button>
-    <button id="clear-all-tabs-button">Clear Note</button>
+    <button id="clear-tab-button">Clear Note</button>
     <div id="text-container">Characters: </div>
     <div
       id="editor"
